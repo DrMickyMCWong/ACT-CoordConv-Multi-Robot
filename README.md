@@ -15,22 +15,19 @@ For fixed camera setups and repeatable object placement, this coordinate-aware a
 ## 🤖 Supported Robot Platforms
 
 ### Alicia Robot
-![Alicia Robot Demo](https://img.shields.io/badge/▶️-Watch%20Demo-red?style=for-the-badge)
-> [📹 **View Alicia Robot Demo Video**](./alicia_ver.mp4)
-> 
-> *Advanced manipulation capabilities with dual-arm configuration*
+https://github.com/user-attachments/assets/ed5335b5-d1b7-47af-a91f-7ffc76258646
+
+*Advanced manipulation capabilities with dual-arm configuration*
 
 ### RoArm Robot  
-![RoArm Robot Demo](https://img.shields.io/badge/▶️-Watch%20Demo-blue?style=for-the-badge)
-> [📹 **View RoArm Robot Demo Video**](./roarm_version.mp4)
-> 
-> *Compact and versatile single-arm manipulation*
+https://github.com/user-attachments/assets/1e35d8aa-5f35-47ce-98c4-e6cb9fd89ea2
+
+*Compact and versatile single-arm manipulation*
 
 ### Sim-to-Real Transfer
-![Sim-to-Real Demo](https://img.shields.io/badge/▶️-Watch%20Demo-green?style=for-the-badge)
-> [📹 **View Sim-to-Real Transfer Video**](./real_to_sim_alicia_ver.mp4)
-> 
-> *Demonstration of simulation to real-world transfer capabilities*
+https://github.com/user-attachments/assets/8b7d5b90-2ef9-4528-8ea6-84442ddcdcaa
+
+*Demonstration of simulation to real-world transfer capabilities*
 
 ## 🔬 Current Development Status
 
