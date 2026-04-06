@@ -1,0 +1,25 @@
+# ACT Training Environment - Linux (GPU)
+# Install with: pip install -r requirements_linux.txt
+
+# Core Deep Learning
+torch==2.0.0
+torchvision==0.15.0
+# CUDA 11.8 will be installed automatically with torch
+
+# Transformer & Model Components
+einops==0.7.0
+transformers==4.28.1
+
+# Data Processing
+h5py==3.8.0
+opencv-python==4.7.0.72
+numpy==1.24.3
+pillow==9.5.0
+
+# Training Utilities
+matplotlib==3.7.1
+tqdm==4.65.0
+ipython==8.12.0
+
+# Robot/Hardware (for evaluation, not needed for training)
+pyserial==3.5

@@ -1,0 +1,64 @@
+# Model checkpoints and training artifacts
+*.pth
+*.pkl
+*.ckpt
+checkpoints/
+data/
+exports/
+
+# Large data files
+*.hdf5
+*.h5
+*.npz
+*.npy
+
+# Notebook outputs and checkpoints
+.ipynb_checkpoints/
+*.ipynb_backup
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+.pytest_cache/
+
+# Environment files
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# IDEs and editors
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Git submodules that are too large
+Synria-Robot-Descriptions/.git/
+
+# Large temporary files
+*.tmp
+*.temp
+*.log
+
+# Calibration and configuration artifacts  
+*.npz
+l515_*.npy
+calibration_positions.json

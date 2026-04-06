@@ -1,0 +1,134 @@
+DrMickyMCWong: Can you give me a simple example (like array of joint states 0 at time 0, array of joint states 1 at time 1, ... array of joint states n at time n)to run through the steps taken by this notebook concerning the joint states as an input, then to the position encoding and then towards the attention layer, by means of that, as I have a very basic understanding of encoder of a transformer, so there should be a tokenization of these joint states prior addition with position encoding in vanilla transformer operation but I cannot see anything similar here.
+
+GitHub Copilot: Great question! Let me walk through a concrete example of how joint states flow through the ACT model. You're right that this is different from text transformers - there's no discrete tokenization here.
+
+## Simple Example: Joint States Through ACT
+
+Let's trace through with a simple example:
+
+```python
+# Example input data
+batch_size = 1
+state_dim = 14  # robot has 14 joints
+chunk_size = 4  # predict 4 future actions
+
+# Current robot joint positions (normalized)
+qpos = torch.tensor([[0.1, -0.2, 0.5, 0.0, 0.3, -0.1, 0.2, 0.4, -0.3, 0.1, 0.0, 0.2, -0.1, 0.3]])
+# Shape: (1, 14)
+
+# Future actions we want the robot to take (for training)
+actions = torch.tensor([
+    [[0.15, -0.15, 0.55, 0.05, 0.35, -0.05, 0.25, 0.45, -0.25, 0.15, 0.05, 0.25, -0.05, 0.35],  # t+1
+     [0.20, -0.10, 0.60, 0.10, 0.40, 0.00, 0.30, 0.50, -0.20, 0.20, 0.10, 0.30, 0.00, 0.40],   # t+2
+     [0.25, -0.05, 0.65, 0.15, 0.45, 0.05, 0.35, 0.55, -0.15, 0.25, 0.15, 0.35, 0.05, 0.45],   # t+3
+     [0.30, 0.00, 0.70, 0.20, 0.50, 0.10, 0.40, 0.60, -0.10, 0.30, 0.20, 0.40, 0.10, 0.50]]    # t+4
+])
+# Shape: (1, 4, 14)
+```
+
+## Step 1: "Tokenization" - Linear Projection to d_model
+
+Instead of word embeddings, ACT uses **linear projections** to convert continuous joint values to transformer embeddings:
+
+````python
+d_model = 512
+
+# Project joint states to d_model dimension
+action_proj = nn.Linear(14, 512)  # Projects each 14-dim action to 512-dim
+qpos_proj = nn.Linear(14, 512)    # Projects current state to 512-dim
+
+# "Tokenize" by projecting to embedding space
+actions_embedded = action_proj(actions)  # (1, 4, 512)
+qpos_embedded = qpos_proj(qpos).unsqueeze(1)  # (1, 1, 512)
+
+print(f"Original actions shape: {actions.shape}")      # (1, 4, 14)
+print(f"Embedded actions shape: {actions_embedded.shape}")  # (1, 4, 512)
+print(f"Current state embedded: {qpos_embedded.shape}")     # (1, 1, 512)
+````
+
+## Step 2: Add Special Tokens
+
+ACT adds a learnable CLS token (like BERT):
+
+````python
+# Add CLS token for style encoding
+# encapsulates the information from the entire input sequence 
+# and carries it through the model's layers for further processing.
+cls_token = torch.randn(1, 512)  # Learnable parameter
+cls_token_batch = cls_token.unsqueeze(1).repeat(1, 1, 1)  # (1, 1, 512)
+
+# Concatenate: [CLS, current_state, action_sequence]
+sequence = torch.cat([cls_token_batch, qpos_embedded, actions_embedded], dim=1)
+print(f"Full sequence shape: {sequence.shape}")  # (1, 6, 512)
+# Sequence = [CLS, qpos, action_t+1, action_t+2, action_t+3, action_t+4]
+````
+
+## Step 3: Positional Encoding
+
+Unlike text transformers that add position for word order, 
+ACT adds position encoding for **temporal sequence**:
+
+````python
+def create_positional_encoding(seq_len=6, d_model=512):
+    """Sinusoidal positional encoding"""
+    pos_encoding = torch.zeros(seq_len, d_model)
+    position = torch.arange(0, seq_len).unsqueeze(1).float()
+    
+    div_term = torch.exp(torch.arange(0, d_model, 2).float() * 
+                        -(math.log(10000.0) / d_model))
+    
+    pos_encoding[:, 0::2] = torch.sin(position * div_term)
+    pos_encoding[:, 1::2] = torch.cos(position * div_term)
+    
+    return pos_encoding.unsqueeze(0)  # (1, 6, 512)
+
+pos_encoding = create_positional_encoding()
+print(f"Positional encoding shape: {pos_encoding.shape}")  # (1, 6, 512)
+
+# Add positional encoding to sequence
+sequence_with_pos = sequence + pos_encoding
+print(f"Sequence + position shape: {sequence_with_pos.shape}")  # (1, 6, 512)
+````
+
+## Step 4: Through the Encoder
+
+Now it goes through transformer encoder layers:
+
+````python
+# Reshape for transformer: (seq_len, batch_size, d_model)
+encoder_input = sequence_with_pos.permute(1, 0, 2)  # (6, 1, 512)
+
+print("Encoder input representation:")
+print("Position 0 (CLS): Learns to encode style/context")
+print("Position 1 (qpos): Current robot state") 
+print("Position 2-5 (actions): Future action sequence")
+
+# After encoder layers (simplified)
+# Each position can attend to all others
+encoder_output = encoder_input  # (6, 1, 512) - after self-attention layers
+
+# Extract CLS token output for style variable
+style_variable = encoder_output[0]  # (1, 512) - CLS token encoding
+print(f"Style variable shape: {style_variable.shape}")  # (1, 512)
+````
+
+## Key Differences from Text Transformers
+
+| Text Transformer | ACT (Robot Actions) |
+|------------------|---------------------|
+| **Tokenization**: Discrete word IDs → embeddings | **Projection**: Continuous joint values → linear projection |
+| **Position**: Word position in sentence | **Time**: Temporal position in action sequence |
+| **Vocabulary**: Fixed word vocabulary | **Continuous**: 14-dimensional joint space |
+| **Input**: "The cat sat" → [101, 2345, 987] | **Input**: Joint angles → [[0.1, -0.2, ...], [0.15, -0.15, ...]] |
+
+## Summary
+
+1. **"Tokenization"**: Linear projections convert 14D joint states to 512D embeddings
+2. **Sequence**: [CLS, current_state, future_action_1, future_action_2, ...]
+3. **Position Encoding**: Sinusoidal encoding for temporal order
+4. **Attention**: Each position attends to all others to learn action dependencies
+5. **Output**: CLS token learns to encode the "style" of the action sequence
+
+The key insight is that instead of discrete tokens, ACT treats each timestep's joint configuration as a continuous "token" that gets projected into the transformer's embedding space.
+
+Similar code found with 1 license type

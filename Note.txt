@@ -1,0 +1,13 @@
+# From detr/models/detr.py (inferred from ACT paper)
+# CLS token: [batch_size, 1, 512]
+# State tokens: [batch_size, state_dim, 512]  # 5 joints
+# Action tokens: [batch_size, chunk_size, 512]  # 100 future actions
+# Vision tokens: [batch_size, num_patches, 512]  # CNN features
+
+POLICY_CONFIG = {
+    'hidden_dim': 512,
+    'nheads': 8,  # 512 ÷ 8 = 64 per head
+    'num_encoder_layers': 4,
+    'num_decoder_layers': 7,
+    'chunk_size': 100
+}
