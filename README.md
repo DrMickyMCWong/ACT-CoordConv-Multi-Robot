@@ -74,15 +74,15 @@ This enables safe operation in cluttered environments while maintaining manipula
 ## 🤖 Supported Robot Platforms
 
 ### Alicia Robot
-![alicia_ver.mp4](alicia_ver.mp4)
+[![Alicia Robot Demo](https://raw.githubusercontent.com/DrMickyMCWong/ACT-CoordConv-Multi-Robot/main/Learn_material/output_demo.png)](https://github.com/DrMickyMCWong/ACT-CoordConv-Multi-Robot/blob/main/Learn_material/alicia_ver.mp4)
 Advanced manipulation capabilities with dual-arm configuration
 
 ### RoArm Robot
-![roarm_version.mp4](roarm_version.mp4)
+[![RoArm Robot Demo](https://raw.githubusercontent.com/DrMickyMCWong/ACT-CoordConv-Multi-Robot/main/Learn_material/output_real_policy.png)](https://github.com/DrMickyMCWong/ACT-CoordConv-Multi-Robot/blob/main/Learn_material/roarm_version.mp4)
 Compact and versatile single-arm manipulation
 
 ### Sim-to-Real Transfer
-![real_to_sim_alicia_ver.mp4](real_to_sim_alicia_ver.mp4)
+[![Sim-to-Real Demo](https://raw.githubusercontent.com/DrMickyMCWong/ACT-CoordConv-Multi-Robot/main/Learn_material/output_action_real_policy_in_sim.png)](https://github.com/DrMickyMCWong/ACT-CoordConv-Multi-Robot/blob/main/Learn_material/real_to_sim_alicia_ver.mp4)
 Demonstration of simulation to real-world transfer capabilities
 
 ## 🔬 Current Development Status
