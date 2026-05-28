@@ -73,6 +73,8 @@ This enables safe operation in cluttered environments while maintaining manipula
 
 ## 🤖 Supported Robot Platforms
 
+Tip: Click each preview image below to open the raw `.mp4` demo.
+
 ### Alicia Robot
 [![Alicia Robot Demo](https://raw.githubusercontent.com/DrMickyMCWong/ACT-CoordConv-Multi-Robot/main/Learn_material/output_demo.png)](https://github.com/DrMickyMCWong/ACT-CoordConv-Multi-Robot/blob/main/Learn_material/alicia_ver.mp4)
 Advanced manipulation capabilities with dual-arm configuration
