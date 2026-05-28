@@ -77,14 +77,17 @@ Tip: Click each preview image below to open the raw `.mp4` demo.
 
 ### Alicia Robot
 [![Alicia Robot Demo](https://raw.githubusercontent.com/DrMickyMCWong/ACT-CoordConv-Multi-Robot/main/Learn_material/output_demo.png)](https://github.com/DrMickyMCWong/ACT-CoordConv-Multi-Robot/blob/main/Learn_material/alicia_ver.mp4)
+Play in browser (MP4): https://cdn.jsdelivr.net/gh/DrMickyMCWong/ACT-CoordConv-Multi-Robot@main/Learn_material/alicia_ver.mp4
 Advanced manipulation capabilities with dual-arm configuration
 
 ### RoArm Robot
 [![RoArm Robot Demo](https://raw.githubusercontent.com/DrMickyMCWong/ACT-CoordConv-Multi-Robot/main/Learn_material/output_real_policy.png)](https://github.com/DrMickyMCWong/ACT-CoordConv-Multi-Robot/blob/main/Learn_material/roarm_version.mp4)
+Play in browser (MP4): https://cdn.jsdelivr.net/gh/DrMickyMCWong/ACT-CoordConv-Multi-Robot@main/Learn_material/roarm_version.mp4
 Compact and versatile single-arm manipulation
 
 ### Sim-to-Real Transfer
 [![Sim-to-Real Demo](https://raw.githubusercontent.com/DrMickyMCWong/ACT-CoordConv-Multi-Robot/main/Learn_material/output_action_real_policy_in_sim.png)](https://github.com/DrMickyMCWong/ACT-CoordConv-Multi-Robot/blob/main/Learn_material/real_to_sim_alicia_ver.mp4)
+Play in browser (MP4): https://cdn.jsdelivr.net/gh/DrMickyMCWong/ACT-CoordConv-Multi-Robot@main/Learn_material/real_to_sim_alicia_ver.mp4
 Demonstration of simulation to real-world transfer capabilities
 
 ## 🔬 Current Development Status
